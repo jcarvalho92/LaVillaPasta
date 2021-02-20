@@ -4,11 +4,21 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import MenuNavigator from "./MenuNavigator";
 
-const Tab = createBottomTabNavigator();
+const BottomTab = createBottomTabNavigator();
 
 const AppNavigator = () => (
-  <Tab.Navigator>
-    <Tab.Screen
+  
+  <BottomTab.Navigator>
+    <BottomTab.Screen
+      name="Home"
+      component={MenuNavigator}
+      options={{
+        tabBarIcon: ({ color, size }) => (
+          <MaterialCommunityIcons name="home" color={color} size={size} />
+        ),
+      }}
+    />
+    <BottomTab.Screen
       name="Menu"
       component={MenuNavigator}
       options={{
@@ -17,7 +27,7 @@ const AppNavigator = () => (
         ),
       }}
     />
-    <Tab.Screen
+    <BottomTab.Screen
       name="Account"
       component={MenuNavigator}
       options={{
@@ -26,7 +36,7 @@ const AppNavigator = () => (
         ),
       }}
     />
-  </Tab.Navigator>
+  </BottomTab.Navigator>
 );
 
 export default AppNavigator;
