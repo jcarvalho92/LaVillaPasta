@@ -1,15 +1,18 @@
 import React from "react";
-import {View,FlatList, StyleSheet } from "react-native";
-import routes from "../navigation/routes";
+import { View, FlatList, StyleSheet } from "react-native";
+
 import colors from "../config/colors";
 import itemsApi from "../api/items";
-import Card from "../components/Card";
+import ListItem from "../components/lists/ListItem";
+import ListItemSeparator from "../components/lists/ListItemSeparator";
+import Button from "../components/Button";
 import ButtonTab from  "../components/ButtonTab";
 import Screen from "../components/Screen";
 import { useState } from "react";
 import { useEffect } from "react";
 
-function PastaScreen({ navigation }) {
+
+function DrinksScreen({ navigation }) {
   const [listings, setListings] = useState([]);
 
   useEffect(() => {
@@ -17,7 +20,7 @@ function PastaScreen({ navigation }) {
   }, []);
 
   const loadListings = async () => {
-    const response = await itemsApi.getPastas();
+    const response = await itemsApi.getDrinks();
     setListings(response.data.data);
   }
   return (
@@ -32,15 +35,21 @@ function PastaScreen({ navigation }) {
       <FlatList
         data={listings}
         keyExtractor={(listing) => listing._id.toString()}
+        ItemSeparatorComponent={ListItemSeparator}
         renderItem={({ item }) => (
-          <Card
+          <ListItem
+            imageUrl= {itemsApi.getPhoto(item.image)}
             title={item.title}
             subTitle={"$" + item.unitPrice}
-            imageUrl= {itemsApi.getPhoto(item.image)}
-            onPress={() => navigation.navigate(routes.SAUCES, item.title)}
           />
         )}
       />
+      <View style={styles.buttonsContainer}>
+        <Button
+            title="Add to Order" 
+            color="primary"
+        />
+      </View>
     </Screen>
   );
 }
@@ -50,7 +59,10 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: colors.light,
   },
-  
+  buttonsContainer: {
+    padding: 20,
+    width: "100%",
+  },
 });
 
-export default PastaScreen;
+export default DrinksScreen;

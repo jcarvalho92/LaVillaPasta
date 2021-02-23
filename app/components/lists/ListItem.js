@@ -9,17 +9,18 @@ import colors from "../../config/colors";
 function ListItem({
   title,
   subTitle,
-  image,
+  imageUrl,
   IconComponent,
   onPress,
   renderRightActions,
+  style
 }) {
   return (
     <Swipeable renderRightActions={renderRightActions}>
       <TouchableHighlight underlayColor={colors.light} onPress={onPress}>
-        <View style={styles.container}>
+        <View style={[styles.container, style]}>
           {IconComponent}
-          {image && <Image style={styles.image} source={image} />}
+          {imageUrl && <Image style={styles.image} source={{ uri: imageUrl }} />}
           <View style={styles.detailsContainer}>
             <Text style={styles.title} numberOfLines={1}>
               {title}
@@ -40,7 +41,8 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     flexDirection: "row",
-    padding: 15,
+    paddingHorizontal: 15,
+    paddingVertical: 5,
     backgroundColor: colors.white,
   },
   detailsContainer: {
@@ -54,7 +56,8 @@ const styles = StyleSheet.create({
     borderRadius: 35,
   },
   subTitle: {
-    color: colors.medium,
+    color: colors.secondary,
+    fontWeight: "bold",
   },
   title: {
     fontWeight: "500",

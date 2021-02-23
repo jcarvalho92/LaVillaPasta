@@ -1,8 +1,11 @@
 export default Object.freeze({
-    PASTA: "Pasta",
-    SAUCE: "Sauce",
+    PASTAS: "Pastas",
+    SAUCES: "Sauces",
     TOPPINGS: "Toppings",
-    LOGIN: "Login",
-    REGISTER: "Register",
+    COMBOS: "Combos",
+    SALADS: "Salads",
+    DESSERTS: "Desserts",
+    DRINKS: "Drinks",
+
   });
   

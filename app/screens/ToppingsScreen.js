@@ -1,7 +1,9 @@
 import React from "react";
 import { View, FlatList, StyleSheet } from "react-native";
-
+import { useState } from "react";
+import { useEffect } from "react";
 import colors from "../config/colors";
+import itemsApi from "../api/items";
 import Screen from "../components/Screen";
 import Button from "../components/Button";
 import ListItem from "../components/lists/ListItem";
@@ -9,48 +11,43 @@ import ListItemSeparator from "../components/lists/ListItemSeparator";
 import Text from "../components/Text";
 
 function ToppingsScreen({ route }) {
-  const listings = [
-    {
-      id: 1,
-      title: "Shrimp",
-      image: require("../assets/toppings/shrimp.jpeg"),
-    },
-    {
-      id: 2,
-      title: "Grilled Chicken",
-      image: require("../assets/toppings/grilledchicken.jpeg"),
-    },
-    {
-      id: 3,
-      title: "Bacon",
-      image: require("../assets/toppings/bacon.jpeg"),
-    },
-    {
-      id: 4,
-      title: "Onions",
-      image: require("../assets/toppings/onion.jpeg"),
-    },
-    {
-      id: 5,
-      title: "Tomatoes",
-      image: require("../assets/toppings/tomatoes.jpeg"),
-    },
-  ];
+  const [remaining, setRemaining] = useState(5);
+  const [itemsClicked, setItemsClicked] = useState([]);
+  const [listings, setListings] = useState([]);
 
+  useEffect(() => {
+    loadListings();
+  }, []);
+
+  const loadListings = async () => {
+    const response = await itemsApi.getToppings();
+    setListings(response.data.data);
+  }
+
+  const handleClick = () => {
+    if(remaining == 0){
+      alert("No remaining toppings to choose!")
+    }
+    else{
+      setRemaining(remaining - 1);
+    }
+    
+  }
   return (
         <Screen style={styles.screen}>
           <View style={styles.container}>
             <Text style={styles.title}>Choose your favorite Toppings!</Text>
-            <Text style={styles.subtitle}>Remaining: 4</Text>
+            <Text style={styles.subtitle}>Remaining: {remaining}</Text>
             <View style={styles.container}>
             <FlatList
                 data={listings}
-                keyExtractor={(listing) => listing.id.toString()}
+                keyExtractor={(listing) => listing._id.toString()}
                 ItemSeparatorComponent={ListItemSeparator}
                 renderItem={({ item }) => (
                 <ListItem
-                    image={item.image}
+                    imageUrl= {itemsApi.getPhoto(item.image)}
                     title={item.title}
+                    onPress={() => handleClick()} 
                 />
                 )}
             />
@@ -59,8 +56,8 @@ function ToppingsScreen({ route }) {
                     title="Add to Order" 
                      color="primary"
                 />
-             </View>
             </View>
+          </View>
             
           </View>
           
@@ -91,6 +88,7 @@ function ToppingsScreen({ route }) {
             padding: 20,
             width: "100%",
           },
+         
     });
 
 

@@ -1,11 +1,10 @@
 import React from 'react';
 import { Text, ImageBackground, StyleSheet, View } from 'react-native';
-
 import Button from "../components/Button";
 import colors from "../config/colors";
 
 function WelcomeScreen({ navigation }) {
-    return (
+  return (
     <ImageBackground 
             blurRadius={2}
             style={styles.background}
