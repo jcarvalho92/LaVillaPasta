@@ -9,6 +9,7 @@ import FormField from "../components/forms/FormField";
 import SubmitButton from "../components/forms/SubmitButton";
 import { useContext } from "react";
 import AuthContext from "../auth/context";
+import { ScrollView } from "react-native-gesture-handler";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().min(3).label("Name"),
@@ -28,32 +29,34 @@ function RegisterScreen(props) {
       password,
       address
     );
-    const jwt = jwtDecode(result.data.token);
+    const token = result.data.token;
+    const jwt = jwtDecode(token);
     const userId = jwt.id
     authContext.setUserId(userId)
+    authContext.setToken(token)
   }
 
   return (
     <Screen style={styles.container}>
-    <Form
-      initialValues=
-      {{ 
-        name: "", 
-        email: "", 
-        phone: "",
-        password: "",
-        address: {
-          streetNumber: "",
-          streetName: "",
-          apartmentNumber: "",
-          city: "",
-          //province: "",
-          postalCode: "",
-        }, 
-      }}
-      onSubmit={handleSubmit}
-      validationSchema={validationSchema}
-    >
+      <ScrollView>
+        <Form
+          initialValues=
+          {{ 
+            name: "", 
+            email: "", 
+            phone: "",
+            password: "",
+            address: {
+              streetNumber: "",
+              streetName: "",
+              apartmentNumber: "",
+              city: "",
+              postalCode: "",
+            }, 
+          }}
+         onSubmit={handleSubmit}
+          validationSchema={validationSchema}
+        >
           <FormField
             autoCorrect={false}
             icon="account"
@@ -125,7 +128,7 @@ function RegisterScreen(props) {
           />
       <SubmitButton title="Register" />
     </Form>
-    
+      </ScrollView>
   </Screen>
 
   );

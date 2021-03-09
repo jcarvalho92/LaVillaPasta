@@ -9,9 +9,11 @@ import ButtonTab from  "../components/ButtonTab";
 import Screen from "../components/Screen";
 import { useState } from "react";
 import { useEffect } from "react";
-
+import { useContext } from "react";
+import AuthContext from "../auth/context";
 
 function DessertScreen({ navigation }) {
+  const authContext = useContext(AuthContext);
   const [listings, setListings] = useState([]);
 
   useEffect(() => {
@@ -21,6 +23,17 @@ function DessertScreen({ navigation }) {
   const loadListings = async () => {
     const response = await itemsApi.getDesserts();
     setListings(response.data.data);
+  }
+
+  const addItemToCart = async (item) => {
+    const result = await itemsApi.postItemToCart(authContext.token,item._id,"pickup",1 )
+
+    if(result.data.success){
+      alert("Added it to your cart!");
+    }
+    else{
+      alert("Failed to add it to your cart!");
+    }
   }
   return (
     <Screen style={styles.screen}>
@@ -39,6 +52,7 @@ function DessertScreen({ navigation }) {
             title={item.title}
             subTitle={"$" + item.unitPrice}
             imageUrl= {itemsApi.getPhoto(item.image)}
+            onPress={ () => addItemToCart(item)}
           />
         )}
       />

@@ -8,6 +8,7 @@ const typeCombo = '?type=combo';
 const typeSalad= '?type=salad';
 const typeDessert= '?type=dessert';
 const typeDrink= '?type=drink';
+const itemToCart = '/orders'
 
 const getPastas = () => client.apiClient.get(endpoint+typePasta);
 const getSauces = () => client.apiClient.get(endpoint+typeSauce);
@@ -21,6 +22,12 @@ const getPhoto = (image) => {
     return client.url+"/uploads/"+image
 }
 
+const postItemToCart = (token, itemId, orderType, quantity) => {
+    client.apiClient.setHeader('Authorization','Bearer '+token)
+    result = client.apiClient.post(endpoint+"/"+itemId+itemToCart, {orderType, quantity});
+    return result;
+}
+
 export default {
     getPastas,
     getSauces,
@@ -29,5 +36,6 @@ export default {
     getSalads,
     getDesserts,
     getDrinks,
-    getPhoto
+    getPhoto,
+    postItemToCart
 }

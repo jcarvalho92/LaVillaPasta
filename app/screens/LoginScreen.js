@@ -3,7 +3,6 @@ import {StyleSheet, View } from "react-native";
 import * as Yup from "yup";
 import jwtDecode from "jwt-decode";
 import authApi from "../api/auth";
-import Screen from "../components/Screen";
 import Form from "../components/forms/Form";
 import FormField from "../components/forms/FormField";
 import ErrorMessage from "../components/forms/ErrorMessage";
@@ -23,12 +22,14 @@ function LoginScreen(props) {
 
   const handleSubmit = async ({email, password}) => {
     const result = await authApi.login(email, password);
-
     if (!result.ok) return SetLoginFailed(true);
     SetLoginFailed(false);
-    const jwt = jwtDecode(result.data.token);
+    
+    const token = result.data.token;
+    const jwt = jwtDecode(token);
     const userId = jwt.id
     authContext.setUserId(userId)
+    authContext.setToken(token)
   }
   
   return (
