@@ -10,9 +10,11 @@ import ButtonTab from  "../components/ButtonTab";
 import Screen from "../components/Screen";
 import { useState } from "react";
 import { useEffect } from "react";
-
+import { useContext } from "react";
+import AuthContext from "../auth/context";
 
 function DrinksScreen({ navigation }) {
+  const authContext = useContext(AuthContext);
   const [listings, setListings] = useState([]);
 
   useEffect(() => {
@@ -23,6 +25,18 @@ function DrinksScreen({ navigation }) {
     const response = await itemsApi.getDrinks();
     setListings(response.data.data);
   }
+
+  const addItemToCart = async (item) => {
+    const result = await itemsApi.postItemToCart(authContext.token,item._id,1 )
+
+    if(result.data.success){
+      alert("Added it to your cart!");
+    }
+    else{
+      alert("Failed to add it to your cart!");
+    }
+  }
+
   return (
     <Screen style={styles.screen}>
       <View style={ {flexDirection: "row"}}>
@@ -41,14 +55,11 @@ function DrinksScreen({ navigation }) {
             imageUrl= {itemsApi.getPhoto(item.image)}
             title={item.title}
             subTitle={"$" + item.unitPrice}
+            onPress={ () => addItemToCart(item)}
           />
         )}
       />
       <View style={styles.buttonsContainer}>
-        <Button
-            title="Add to Order" 
-            color="primary"
-        />
       </View>
     </Screen>
   );

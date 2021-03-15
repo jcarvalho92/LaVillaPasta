@@ -9,9 +9,11 @@ import ButtonTab from  "../components/ButtonTab";
 import Screen from "../components/Screen";
 import { useState } from "react";
 import { useEffect } from "react";
-
+import { useContext } from "react";
+import AuthContext from "../auth/context";
 
 function ComboScreen({ navigation }) {
+  const authContext = useContext(AuthContext);
   const [listings, setListings] = useState([]);
 
   useEffect(() => {
@@ -21,6 +23,12 @@ function ComboScreen({ navigation }) {
   const loadListings = async () => {
     const response = await itemsApi.getCombos();
     setListings(response.data.data);
+  }
+
+  const addItemToCart = async (item) => {
+    const result = await itemsApi.postItemToCart(authContext.token,item._id,1 )
+    navigation.navigate(routes.DRINKS);
+   
   }
   return (
     <Screen style={styles.screen}>
@@ -39,15 +47,11 @@ function ComboScreen({ navigation }) {
             title={item.title}
             subTitle={"$" + item.unitPrice}
             imageUrl= {itemsApi.getPhoto(item.image)}
-            onPress={() => navigation.navigate(routes.DRINKS)}
+            onPress={ () => addItemToCart(item)}
           />
         )}
       />
       <View style={styles.buttonsContainer}>
-        <Button
-            title="Add to Order" 
-            color="primary"
-        />
       </View>
     </Screen>
   );

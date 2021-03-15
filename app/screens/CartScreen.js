@@ -78,16 +78,15 @@ function CartScreen({ navigation }) {
                 ItemSeparatorComponent={ListItemSeparator}
                 extraData={listings}
                 renderItem={({ item }) => (
-                <ListItem
-                    imageUrl= {itemsApi.getPhoto(item.item.image)}
-                    title={item.item.title}
-                    subTitle={item.item.description}
-                    unitPrice={item.item.unitPrice}
-                    renderRightActions={() => (
-                      <ListItemDeleteAction onPress={() => handleDelete(item)} />
-                    )}
-                />
-                )}
+                  <ListItem
+                      imageUrl= {itemsApi.getPhoto(item.item.image)}
+                      title={item.item.title} 
+                      unitPrice={item.item.unitPrice} 
+                      renderRightActions={() => (
+                        <ListItemDeleteAction onPress={() => handleDelete(item)} />
+                      )}
+                  />
+                  )}
             />
             
           </View>

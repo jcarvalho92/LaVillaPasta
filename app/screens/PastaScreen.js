@@ -8,8 +8,11 @@ import ButtonTab from  "../components/ButtonTab";
 import Screen from "../components/Screen";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useContext } from "react";
+import AuthContext from "../auth/context";
 
 function PastaScreen({ navigation }) {
+  const authContext = useContext(AuthContext);
   const [listings, setListings] = useState([]);
 
   useEffect(() => {
@@ -19,6 +22,11 @@ function PastaScreen({ navigation }) {
   const loadListings = async () => {
     const response = await itemsApi.getPastas();
     setListings(response.data.data);
+  }
+
+  const addItemToCart = async (item) => {
+    const result = await itemsApi.postItemToCart(authContext.token,item._id,1 )
+    navigation.navigate(routes.SAUCES);
   }
   return (
     <Screen style={styles.screen}>
@@ -37,7 +45,7 @@ function PastaScreen({ navigation }) {
             title={item.title}
             subTitle={"$" + item.unitPrice}
             imageUrl= {itemsApi.getPhoto(item.image)}
-            onPress={() => navigation.navigate(routes.SAUCES, item.title)}
+            onPress={ () => addItemToCart(item)}
           />
         )}
       />

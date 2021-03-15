@@ -2,7 +2,8 @@ import React from "react";
 import { View, FlatList, StyleSheet } from "react-native";
 import { useState } from "react";
 import { useEffect } from "react";
-
+import { useContext } from "react";
+import AuthContext from "../auth/context";
 import colors from "../config/colors";
 import routes from "../navigation/routes";
 import itemsApi from "../api/items";
@@ -12,7 +13,7 @@ import ListItemSeparator from "../components/lists/ListItemSeparator";
 import Text from "../components/Text";
 
 function SauceScreen({ navigation }) {
-
+  const authContext = useContext(AuthContext);
   const [listings, setListings] = useState([]);
 
   useEffect(() => {
@@ -22,6 +23,11 @@ function SauceScreen({ navigation }) {
   const loadListings = async () => {
     const response = await itemsApi.getSauces();
     setListings(response.data.data);
+  }
+
+  const addItemToCart = async (item) => {
+    const result = await itemsApi.postItemToCart(authContext.token,item._id,1 );
+    navigation.navigate(routes.TOPPINGS);
   }
   return (
         <Screen style={styles.screen}>
@@ -36,7 +42,7 @@ function SauceScreen({ navigation }) {
                 <ListItem
                     imageUrl= {itemsApi.getPhoto(item.image)}
                     title={item.title}
-                    onPress={() => navigation.navigate(routes.TOPPINGS, item.title)}
+                    onPress={ () => addItemToCart(item)}
                     style={styles.listItem}
                 />
                 )}
