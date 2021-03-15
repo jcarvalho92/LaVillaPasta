@@ -22,9 +22,9 @@ const getPhoto = (image) => {
     return client.url+"/uploads/"+image
 }
 
-const postItemToCart = (token, itemId, orderType, quantity) => {
+const postItemToCart = (token, itemId, quantity) => {
     client.apiClient.setHeader('Authorization','Bearer '+token)
-    result = client.apiClient.post(endpoint+"/"+itemId+itemToCart, {orderType, quantity});
+    result = client.apiClient.post(endpoint+"/"+itemId+itemToCart, {quantity});
     return result;
 }
 

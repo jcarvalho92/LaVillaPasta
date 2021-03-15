@@ -12,8 +12,8 @@ import { useContext } from "react";
 import AuthContext from "../auth/context";
 
 const validationSchema = Yup.object().shape({
-  email: Yup.string().required().email().label("Email"),
-  password: Yup.string().required().min(4).label("Password"),
+  //email: Yup.string().required().email().label("Email"),
+  //password: Yup.string().required().min(4).label("Password"),
 });
 
 function LoginScreen(props) {

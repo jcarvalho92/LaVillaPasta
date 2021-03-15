@@ -26,7 +26,7 @@ function DessertScreen({ navigation }) {
   }
 
   const addItemToCart = async (item) => {
-    const result = await itemsApi.postItemToCart(authContext.token,item._id,"pickup",1 )
+    const result = await itemsApi.postItemToCart(authContext.token,item._id,1 )
 
     if(result.data.success){
       alert("Added it to your cart!");

@@ -11,7 +11,7 @@ import authApi from "../api/auth";
 import { useContext } from "react";
 import AuthContext from "../auth/context";
 
-function AccountScreen(props) {
+function AccountScreen({ navigation }) {
   const authContext = useContext(AuthContext);
   const [user, setUser] = useState({});
 
@@ -34,7 +34,7 @@ function AccountScreen(props) {
         <ListItem
           title={user.name}
           subTitle= {user.email}
-          onPress={loadUserInfo()}
+          onPress={() => navigation.navigate("EditUser")}
         />
       </View>
       <View style={styles.container}>
@@ -50,7 +50,8 @@ function AccountScreen(props) {
         /> 
         <ListItemSeparator></ListItemSeparator>
         <ListItem
-          title="Orders History"
+          title="My Orders"
+          onPress={() => navigation.navigate("MyOrders")}
           IconComponent={
             <Icon
               name="format-list-bulleted"

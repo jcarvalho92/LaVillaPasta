@@ -15,21 +15,27 @@ import Text from "../components/Text";
 import { useContext } from "react";
 import AuthContext from "../auth/context";
 
-function CartScreen({ route }) {
+function CartScreen({ navigation }) {
   const authContext = useContext(AuthContext);
   const [listings, setListings] = useState([]);
-  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
-    loadListings();
-  }, []);
+    const load = navigation.addListener('focus', () => {
+      loadListings();
+    });
+    return load;
+  }, [navigation]);
 
   const loadListings = async () => {
-    const response = await ordersApi.getOrderPerUser(authContext.userId);
+    const response = await ordersApi.getSubmittedOrder(authContext.userId);
     setListings(response.data.data);
   }
 
   const handleDelete = async (item) => {
+   
+   var newListings = listings.filter(x => x.id !== item.id);
+   setListings(newListings);
+
     await ordersApi.deleteItemFromOrder(authContext.token, item.id);
   };
 
@@ -40,8 +46,6 @@ function CartScreen({ route }) {
       [
         {
           text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
         },
         { text: "Yes", onPress: () => deleteAll() }
       ],
@@ -50,6 +54,7 @@ function CartScreen({ route }) {
   };
 
   const deleteAll = async () => {
+    setListings([]);
     var i = 0;
       for(i=0; i < listings.length; i++){
        await ordersApi.deleteItemFromOrder(authContext.token, listings[i]._id);
@@ -72,8 +77,6 @@ function CartScreen({ route }) {
                 keyExtractor={(listing) => listing._id.toString()}
                 ItemSeparatorComponent={ListItemSeparator}
                 extraData={listings}
-                refreshing={refreshing}
-                onRefresh={loadListings()}
                 renderItem={({ item }) => (
                 <ListItem
                     imageUrl= {itemsApi.getPhoto(item.item.image)}

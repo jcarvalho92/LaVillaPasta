@@ -7,7 +7,8 @@ import ComboScreen from "../screens/ComboScreen";
 import SaladScreen from "../screens/SaladScreen";
 import DessertScreen from "../screens/DessertScreen";
 import DrinksScreen from "../screens/DrinksScreen";
-
+import MyOrdersScreen from "../screens/MyOrdersScreen";
+import EditUserScreen from "../screens/EditUserScreen";
 const Stack = createStackNavigator();
 
 const MenuNavigator = () => (
@@ -19,6 +20,8 @@ const MenuNavigator = () => (
     <Stack.Screen name="Salads" component={SaladScreen} />
     <Stack.Screen name="Desserts" component={DessertScreen} />
     <Stack.Screen name="Drinks" component={DrinksScreen} />
+    <Stack.Screen name="MyOrders" component={MyOrdersScreen} />
+    <Stack.Screen name="EditUser" component={EditUserScreen} />
   </Stack.Navigator>
 );
 
