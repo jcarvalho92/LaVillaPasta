@@ -32,12 +32,36 @@ function CartScreen({ navigation }) {
   }
 
   const handleDelete = async (item) => {
-   
-   var newListings = listings.filter(x => x.id !== item.id);
-   setListings(newListings);
+   if(item.item.type != "pasta"){
+     var newListings = listings.filter(x => x.id !== item.id);
+     setListings(newListings);
+     await ordersApi.deleteItemFromOrder(authContext.token, item.id);
+   }
+   else{
 
-    await ordersApi.deleteItemFromOrder(authContext.token, item.id);
+     await ordersApi.deleteItemFromOrder(authContext.token, item.id);
+
+     deleteSauce();
+     deleteToppings();
+     
+   }
+ 
   };
+
+  const deleteSauce = async () => {
+    var sauceToDelete = listings.filter(x => x.item.type == "sauce"); 
+
+   await ordersApi.deleteItemFromOrder(authContext.token, sauceToDelete[0].id);
+  }
+  const deleteToppings = async () => {
+    var toppingsToDelete = listings.filter(x => x.item.type == "topping"); 
+
+   for (let index = 0; index < toppingsToDelete.length; index++) {
+    await ordersApi.deleteItemFromOrder(authContext.token, toppingsToDelete[index].id);
+   }
+   loadListings();
+  }
+
 
   const deleteItems = () => {
     Alert.alert(
@@ -79,6 +103,7 @@ function CartScreen({ navigation }) {
                 extraData={listings}
                 renderItem={({ item }) => (
                   <ListItem
+                      order = {item}
                       imageUrl= {itemsApi.getPhoto(item.item.image)}
                       title={item.item.title} 
                       unitPrice={item.item.unitPrice} 

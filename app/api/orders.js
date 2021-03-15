@@ -6,7 +6,7 @@ const orderPerUser = '?user=';
 
 const getOrderPerUser = (userId) => client.apiClient.get(endpoint+orderPerUser+userId);
 
-const getSubmittedOrder = (userId) => client.apiClient.get(endpoint+orderPerUser+userId+'&orderStatus=submitted');
+const getSubmittedOrder = (userId) => client.apiClient.get(endpoint+orderPerUser+userId+'&orderStatus=submitted&sort=createdAt');
 
 const getDeliveredOrder = (userId) => client.apiClient.get(endpoint+orderPerUser+userId+'&orderStatus=delivered');
 

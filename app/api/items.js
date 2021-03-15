@@ -28,6 +28,12 @@ const postItemToCart = (token, itemId, quantity) => {
     return result;
 }
 
+const changeQtdItemOrder = (token, itemId,orderId, quantity) => {
+    client.apiClient.setHeader('Authorization','Bearer '+token)
+    result = client.apiClient.put(endpoint+"/"+itemId+itemToCart+"/"+orderId, {quantity});
+    return result;
+}
+
 export default {
     getPastas,
     getSauces,
@@ -37,5 +43,6 @@ export default {
     getDesserts,
     getDrinks,
     getPhoto,
-    postItemToCart
+    postItemToCart,
+    changeQtdItemOrder
 }

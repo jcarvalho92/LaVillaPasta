@@ -56,12 +56,6 @@ function DessertScreen({ navigation }) {
           />
         )}
       />
-      <View style={styles.buttonsContainer}>
-        <Button
-            title="Add to Order" 
-            color="primary"
-        />
-      </View>
     </Screen>
   );
 }
