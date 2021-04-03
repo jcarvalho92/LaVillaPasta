@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useContext } from "react";
 import AuthContext from "../auth/context";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Alert } from "react-native";
 import * as Yup from "yup";
 import authApi from "../api/auth";
 import usersApi from "../api/users";
@@ -23,7 +23,6 @@ function EditUserScreen(props) {
   const authContext = useContext(AuthContext);
   const [user, setUser] = useState({address:{}});
   const [isLoading, setLoading] = useState(true);
-
   useEffect(() => {
     loadUserInfo();
 
@@ -32,8 +31,10 @@ function EditUserScreen(props) {
   const loadUserInfo = async () => {
     setLoading(true)
     const response = await authApi.getUserInfo(authContext.token);
+    
     setUser(response.data.data);
-    setLoading(false)
+    setLoading(false);
+
   }
 
   const handleSubmit = async ({phone,address}) => {
@@ -43,6 +44,18 @@ function EditUserScreen(props) {
       phone,
       address
     );
+    if(result.data.success){
+      Alert.alert(
+        "Updating Personal Info.",
+        "Succeded!",
+      );
+    }
+    else{
+      Alert.alert(
+        "Updating Personal Info.",
+        "Failed!",
+      );
+    }
   }
 
   return (
@@ -55,35 +68,19 @@ function EditUserScreen(props) {
         <Form
           initialValues=
           {{ 
-            phone: "",
+            phone: user.phone,
             address: {
-              streetNumber: "",
-              streetName: "",
-              apartmentNumber: "",
-              city: "",
-              postalCode: "",
+              streetNumber: user.address ? user.address.streetNumber : "",
+              streetName: user.address ? user.address.streetName : "",
+              apartmentNumber: user.address ? user.address.apartmentNumber : "",
+              city: user.address ? user.address.city : "",
+              postalCode: user.address ? user.address.postalCode : "",
             }, 
           }}
          onSubmit={handleSubmit}
          validationSchema={validationSchema}
         >
-          <FormField
-            autoCorrect={false}
-            icon="account"
-            name="name"
-            placeholder="Name"
-            value={user.name}
-          />
-          <FormField
-            autoCapitalize="none"
-            autoCorrect={false}
-            icon="email"
-            keyboardType="email-address"
-            name="email"
-            placeholder="Email"
-            textContentType="emailAddress"
-            value={user.email}
-          />
+          
 
           <FormField
             autoCorrect={false}
@@ -91,9 +88,7 @@ function EditUserScreen(props) {
             name="phone"
             textContentType="password"
             keyboardType="phone-pad"
-            placeholder="Mobile Number"
-            //onChangeText="phone"
-            value={user.phone}
+            placeholder="mobile"
           />
 
           <FormField
@@ -101,8 +96,6 @@ function EditUserScreen(props) {
             icon="home"
             name="address.streetNumber"
             placeholder="Street Number"
-            value ={user.address ? user.address.streetNumber : ""}
-          
           />
 
           <FormField
@@ -110,8 +103,6 @@ function EditUserScreen(props) {
             icon="home"
             name="address.streetName"
             placeholder="Street Name"
-            value ={user.address ? user.address.streetName : "" }
-
           />
 
           <FormField
@@ -120,8 +111,7 @@ function EditUserScreen(props) {
             name="address.apartmentNumber"
             placeholder="Apartament Number"
             keyboardType="numeric"
-            value ={user.address ? user.address.apartmentNumber : "" }
-          />
+           />
 
           <FormField
             autoCapitalize="none"
@@ -129,7 +119,6 @@ function EditUserScreen(props) {
             icon="home"
             name="address.city"
             placeholder="City"
-            value ={user.address ? user.address.city : ""}
           /> 
 
           <FormField
@@ -138,8 +127,6 @@ function EditUserScreen(props) {
             icon="home"
             name="address.postalCode"
             placeholder="Postal code"
-            value ={user.address ? user.address.postalCode : "" }
-
           />
 
       <SubmitButton title="Update" />

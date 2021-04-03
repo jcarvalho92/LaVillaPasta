@@ -2,7 +2,7 @@ import client from './client';
 
 const endpoint = '/orders';
 const orderPerUser = '?user=';
-
+const billings = '/billings';
 
 const getOrderPerUser = (userId) => client.apiClient.get(endpoint+orderPerUser+userId);
 
@@ -15,9 +15,15 @@ const deleteItemFromOrder = (token, orderId) => {
     return client.apiClient.delete(endpoint+"/"+orderId);
   }
 
+const postBillings = (token, orderId, address) => {
+    client.apiClient.setHeader('Authorization','Bearer '+token)
+    result = client.apiClient.post(endpoint+"/"+orderId+billings, {address});
+    return result;
+}
   export default {
     getOrderPerUser,
     getSubmittedOrder,
     getDeliveredOrder,
-    deleteItemFromOrder
+    deleteItemFromOrder,
+    postBillings
 }

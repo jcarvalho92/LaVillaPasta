@@ -18,6 +18,7 @@ import AuthContext from "../auth/context";
 function CartScreen({ navigation }) {
   const authContext = useContext(AuthContext);
   const [listings, setListings] = useState([]);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     const load = navigation.addListener('focus', () => {
@@ -28,8 +29,18 @@ function CartScreen({ navigation }) {
 
   const loadListings = async () => {
     const response = await ordersApi.getSubmittedOrder(authContext.userId);
-    setListings(response.data.data);
+    let array = response.data.data
+    setListings(array);
+    
+    var value = 0;
+
+    array.forEach(item => {
+      value = value + item.item.unitPrice;
+    });
+    
+    setTotal(value);
   }
+
 
   const handleDelete = async (item) => {
    if(item.item.type != "pasta"){
@@ -119,7 +130,7 @@ function CartScreen({ navigation }) {
           </View>
           <View style={styles.buttonsContainer}>
               <View style={styles.containerRowDirection}>
-                <Text style={styles.subtitle}>Total: </Text>
+                <Text style={styles.subtitle}>Total: {total}</Text>
                 <Text style={styles.subtitle}> </Text>
               </View>
                 
@@ -127,6 +138,7 @@ function CartScreen({ navigation }) {
                 <Button
                     title="Checkout" 
                      color="primary"
+                     onPress={() => navigation.navigate("Checkout", total)}
                 />
             </View>
         </Screen>

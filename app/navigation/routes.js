@@ -8,6 +8,7 @@ export default Object.freeze({
     DRINKS: "Drinks",
     MYORDERS: "MyOrders",
     EDITUSER: "EditUser",
+    CHECKOUT: "Checkout"
 
   });
   

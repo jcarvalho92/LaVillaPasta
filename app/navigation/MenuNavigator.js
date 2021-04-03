@@ -9,6 +9,7 @@ import DessertScreen from "../screens/DessertScreen";
 import DrinksScreen from "../screens/DrinksScreen";
 import MyOrdersScreen from "../screens/MyOrdersScreen";
 import EditUserScreen from "../screens/EditUserScreen";
+import CheckoutScreen from "../screens/CheckoutScreen";
 const Stack = createStackNavigator();
 
 const MenuNavigator = () => (
@@ -22,6 +23,7 @@ const MenuNavigator = () => (
     <Stack.Screen name="Drinks" component={DrinksScreen} />
     <Stack.Screen name="MyOrders" component={MyOrdersScreen} />
     <Stack.Screen name="EditUser" component={EditUserScreen} />
+    <Stack.Screen name="Checkout" component={CheckoutScreen} />
   </Stack.Navigator>
 );
 

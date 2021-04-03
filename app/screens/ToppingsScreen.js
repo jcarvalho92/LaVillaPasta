@@ -1,5 +1,5 @@
 import React from "react";
-import { View, FlatList, StyleSheet } from "react-native";
+import { View, FlatList, StyleSheet,Alert } from "react-native";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useContext } from "react";
@@ -30,7 +30,10 @@ function ToppingsScreen({ navigation }) {
 
   const handleClick = async (item) => {
     if(remaining == 0){
-      alert("No remaining toppings to choose!")
+      Alert.alert(
+        "Adding toppings",
+        "No remaining toppings to choose!",
+      );
     }
     else{
       setArrayItems([...arrayItems, item]);

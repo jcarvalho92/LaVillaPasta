@@ -1,5 +1,5 @@
 import React from "react";
-import { View, FlatList, StyleSheet } from "react-native";
+import { View, FlatList, StyleSheet, Alert } from "react-native";
 
 import colors from "../config/colors";
 import itemsApi from "../api/items";
@@ -27,12 +27,20 @@ function DessertScreen({ navigation }) {
 
   const addItemToCart = async (item) => {
     const result = await itemsApi.postItemToCart(authContext.token,item._id,1 )
+ 
+    
 
     if(result.data.success){
-      alert("Added it to your cart!");
+      Alert.alert(
+        "Adding Items",
+        "Added it to your cart!",
+      );
     }
     else{
-      alert("Failed to add it to your cart!");
+      Alert.alert(
+        "Adding Items",
+        "Failed to add it to your cart!",
+      );
     }
   }
   return (

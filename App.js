@@ -9,6 +9,7 @@ import AuthContext from "./app/auth/context";
 
 export default function App() {
   const [userId, setUserId] = useState();
+  //const [user, setUser] = useState({});
   const [token, setToken] = useState();
   return (
     <AuthContext.Provider value={{userId, setUserId, token, setToken}}>
