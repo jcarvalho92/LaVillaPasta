@@ -10,6 +10,16 @@ const getSubmittedOrder = (userId) => client.apiClient.get(endpoint+orderPerUser
 
 const getDeliveredOrder = (userId) => client.apiClient.get(endpoint+orderPerUser+userId+'&orderStatus=delivered');
 
+const getAllSubmittedOrder = () => client.apiClient.get(endpoint+'?orderStatus=submitted&sort=user');
+
+const getAllInProcessOrder = () => client.apiClient.get(endpoint+'?orderStatus=in process&sort=user');
+
+const getAllReadyOrder = () => client.apiClient.get(endpoint+'?orderStatus=ready&sort=user');
+
+const getAllOnDeliveryOrder = () => client.apiClient.get(endpoint+'?orderStatus=on delivery&sort=user');
+
+const getAllDeliveredOrder = () => client.apiClient.get(endpoint+'?orderStatus=delivered&sort=user');
+
 const deleteItemFromOrder = (token, orderId) => {
     client.apiClient.setHeader('Authorization', 'Bearer ' + token);
     return client.apiClient.delete(endpoint+"/"+orderId);
@@ -24,6 +34,11 @@ const postBillings = (token, orderId, address) => {
     getOrderPerUser,
     getSubmittedOrder,
     getDeliveredOrder,
+    getAllSubmittedOrder,
+    getAllDeliveredOrder,
+    getAllInProcessOrder,
+    getAllReadyOrder,
+    getAllOnDeliveryOrder,
     deleteItemFromOrder,
     postBillings
 }

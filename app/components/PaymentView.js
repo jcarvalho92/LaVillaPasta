@@ -4,7 +4,7 @@ import { WebView } from 'react-native-webview';
 
 function PaymentView(props) {
   
-  const STRIPE_PK = 'add your key here'
+  const STRIPE_PK = 'pk_test_51IZNhHF3emABSJOMuUKiHvQkDOQ3nTgnQBFmAXQkulchB5MOerhOhv4TzHahUIsuN8t1nLgIADSjjlwnKwqg7UoA008l124OvH'
   const { amount, product} = props
 
   const onCheckStatus = (response) => {

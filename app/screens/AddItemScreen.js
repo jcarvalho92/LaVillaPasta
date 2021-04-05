@@ -89,6 +89,7 @@ function AddItemScreen() {
   }
 
   const postImage = async (itemId) => {
+    
     const result = await itemsApi.changeItemPicture(
       authContext.token,
       itemId,

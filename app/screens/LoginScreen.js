@@ -22,14 +22,20 @@ function LoginScreen(props) {
 
   const handleSubmit = async ({email, password}) => {
     const result = await authApi.login(email, password);
+
     if (!result.ok) return SetLoginFailed(true);
     SetLoginFailed(false);
     
     const token = result.data.token;
+    authContext.setToken(token)
+    
     const jwt = jwtDecode(token);
     const userId = jwt.id
     authContext.setUserId(userId)
-    authContext.setToken(token)
+    
+    const user = await authApi.getUserInfo(token);
+    authContext.setUser(user.data.data)
+    
   }
   
   return (

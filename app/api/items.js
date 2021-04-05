@@ -8,7 +8,7 @@ const typeCombo = '?type=combo';
 const typeSalad= '?type=salad';
 const typeDessert= '?type=dessert';
 const typeDrink= '?type=drink';
-const itemToCart = '/orders'
+const orders = '/orders'
 
 const getPastas = () => client.apiClient.get(endpoint+typePasta);
 const getSauces = () => client.apiClient.get(endpoint+typeSauce);
@@ -24,21 +24,31 @@ const getPhoto = (image) => {
 
 const postItemToCart = (token, itemId, quantity) => {
     client.apiClient.setHeader('Authorization','Bearer '+token)
-    result = client.apiClient.post(endpoint+"/"+itemId+itemToCart, {quantity});
+    result = client.apiClient.post(endpoint+"/"+itemId+orders, {quantity});
     return result;
 }
 
 const changeQtdItemOrder = (token, itemId,orderId, quantity) => {
     client.apiClient.setHeader('Authorization','Bearer '+token)
-    result = client.apiClient.put(endpoint+"/"+itemId+itemToCart+"/"+orderId, {quantity});
+    result = client.apiClient.put(endpoint+"/"+itemId+orders+"/"+orderId, {quantity});
     return result;
 }
 
+const changeStatusItemOrder = (token, itemId,orderId, status) => {
+    console.log("inside endpoint: ");
+    console.log("token: " + token);
+    console.log("itemId: " + itemId);
+    console.log("orderId: "+orderId);
+    console.log("status: " +status);
+    client.apiClient.setHeader('Authorization','Bearer '+token)
+    result = client.apiClient.put(endpoint+"/"+itemId+orders+"/"+orderId, {status});
+    return result;
+}
 
 const changeItemPicture = (token, itemId,file) => {
     client.apiClient.setHeader('Authorization','Bearer '+token)
     client.apiClient.setHeader('content-type','multipart/form-data')
-    result = client.apiClient.put(endpoint+"/"+itemId+"/photo", {file});
+    result = client.apiClient.put(endpoint+"/"+itemId+"/photo", file);
     return result;
 }
 
@@ -51,7 +61,6 @@ const addItem = (token, item, onUploadProgress) => {
     data.append("unitPrice", item.price);
     data.append("type", item.category.label.toLowerCase());
     data.append("description", item.description);
-    console.log(item);
     result = client.apiClient.post(endpoint, data, {
       onUploadProgress: (progress) =>
         onUploadProgress(progress.loaded / progress.total),
@@ -71,6 +80,7 @@ export default {
     getPhoto,
     postItemToCart,
     changeQtdItemOrder,
+    changeStatusItemOrder,
     addItem,
     changeItemPicture
 }

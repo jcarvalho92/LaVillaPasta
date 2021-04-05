@@ -31,11 +31,11 @@ function PastaScreen({ navigation }) {
   return (
     <Screen style={styles.screen}>
       <View style={ {flexDirection: "row"}}>
-        <ButtonTab title="Pastas" onPress={() => navigation.navigate("Pastas")}></ButtonTab> 
-        <ButtonTab title="Combos" onPress={() => navigation.navigate("Combos")}></ButtonTab> 
-        <ButtonTab title="Salads" onPress={() => navigation.navigate("Salads")}></ButtonTab> 
-        <ButtonTab title="Desserts" onPress={() => navigation.navigate("Desserts")}></ButtonTab> 
-        <ButtonTab title="Drinks" onPress={() => navigation.navigate("Drinks")}></ButtonTab> 
+        <ButtonTab style={styles.buttonTab} title="Pastas" onPress={() => navigation.navigate("Pastas")}></ButtonTab> 
+        <ButtonTab style={styles.buttonTab} title="Combos" onPress={() => navigation.navigate("Combos")}></ButtonTab> 
+        <ButtonTab style={styles.buttonTab} title="Salads" onPress={() => navigation.navigate("Salads")}></ButtonTab> 
+        <ButtonTab style={styles.buttonTab} title="Desserts" onPress={() => navigation.navigate("Desserts")}></ButtonTab> 
+        <ButtonTab style={styles.buttonTab} title="Drinks" onPress={() => navigation.navigate("Drinks")}></ButtonTab> 
       </View>
       <FlatList
         data={listings}
@@ -58,7 +58,9 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: colors.light,
   },
-  
+  buttonTab: {
+    paddingVertical: 10,
+  },
 });
 
 export default PastaScreen;

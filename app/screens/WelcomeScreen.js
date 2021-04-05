@@ -1,9 +1,18 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Text, ImageBackground, StyleSheet, View } from 'react-native';
 import Button from "../components/Button";
 import colors from "../config/colors";
+import { useContext } from "react";
+import AuthContext from "../auth/context";
 
 function WelcomeScreen({ navigation }) {
+  const authContext = useContext(AuthContext);
+
+  useEffect(() => {
+    authContext.setUserId(0);
+    authContext.setUser({});
+  }, []);
+
   return (
     <ImageBackground 
             blurRadius={2}

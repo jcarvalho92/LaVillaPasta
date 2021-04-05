@@ -47,7 +47,7 @@ function CheckoutScreen({ route }) {
     let jsonResponse = JSON.parse(paymentResponse);
 
     try {
-        const stripeResponse = await axios.post('http://localhost:8000/payment', {
+        const stripeResponse = await axios.post('http://10.0.2.2:8000/payment', {
             email: user.email,
             product: cartInfo,
             authToken: jsonResponse
@@ -104,7 +104,7 @@ function CheckoutScreen({ route }) {
             <Form
                initialValues=
                 {{ 
-                  address: user.address ? (user.address.streetNumber +" "+ user.address.streetName + (user.address.apartmentNumber == "" ? " ," : " ,"+user.address.apartmentNumber+", ") +user.address.city+", "+user.address.postalCode) : ""
+                  address: user.address ? (user.address.streetNumber +" "+ user.address.streetName + (user.address.apartmentNumber == null ? " ," : " ,"+user.address.apartmentNumber+", ") +user.address.city+", "+user.address.postalCode) : ""
                }}
               validationSchema={validationSchema}
             >

@@ -39,10 +39,6 @@ function ImageInput({ imageUri, onChangeImage }) {
 				quality: 0.5,
         
       });
-      console.log("result after launchImageLibraryAsync");
-      console.log(result);
-      console.log("result uri");
-      console.log(result.uri);
       if (!result.cancelled) onChangeImage(result.uri);
     } catch (error) {
       console.log("Error reading an image", error);

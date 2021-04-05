@@ -27,12 +27,14 @@ function FormImagePicker({ name , addImage}) {
     const newImageUri =  "file:///" + uri.split("file:/").join("");
 
     const formData = new FormData();
-    formData.append('photo', {
+    formData.append('file', {
       uri : newImageUri,
       type: mime.getType(newImageUri),
       name: newImageUri.split("/").pop()
     });
     addImage(formData);
+
+    
   }
 
   return (
