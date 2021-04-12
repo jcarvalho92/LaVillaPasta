@@ -47,7 +47,7 @@ function CheckoutScreen({ route }) {
     let jsonResponse = JSON.parse(paymentResponse);
 
     try {
-        const stripeResponse = await axios.post('http://10.0.2.2:8000/payment', {
+        const stripeResponse = await axios.post('http://192.168.0.101:8000/payment', {
             email: user.email,
             product: cartInfo,
             authToken: jsonResponse

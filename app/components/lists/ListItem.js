@@ -13,10 +13,11 @@ function ListItem({
   IconComponent,
   onPress,
   renderRightActions,
+  renderLeftActions,
   style
 }) {
   return (
-    <Swipeable renderRightActions={renderRightActions}>
+    <Swipeable renderRightActions={renderRightActions} renderLeftActions={renderLeftActions}>
       <TouchableHighlight underlayColor={colors.medium} onPress={onPress}>
         <View style={[styles.container, style]}>
           {IconComponent}

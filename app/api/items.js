@@ -34,14 +34,9 @@ const changeQtdItemOrder = (token, itemId,orderId, quantity) => {
     return result;
 }
 
-const changeStatusItemOrder = (token, itemId,orderId, status) => {
-    console.log("inside endpoint: ");
-    console.log("token: " + token);
-    console.log("itemId: " + itemId);
-    console.log("orderId: "+orderId);
-    console.log("status: " +status);
+const changeStatusItemOrder = (token, itemId,orderId, orderStatus) => {
     client.apiClient.setHeader('Authorization','Bearer '+token)
-    result = client.apiClient.put(endpoint+"/"+itemId+orders+"/"+orderId, {status});
+    result = client.apiClient.put(endpoint+"/"+itemId+orders+"/"+orderId, {orderStatus});
     return result;
 }
 

@@ -12,11 +12,11 @@ const getDeliveredOrder = (userId) => client.apiClient.get(endpoint+orderPerUser
 
 const getAllSubmittedOrder = () => client.apiClient.get(endpoint+'?orderStatus=submitted&sort=user');
 
-const getAllInProcessOrder = () => client.apiClient.get(endpoint+'?orderStatus=in process&sort=user');
+const getAllInProcessOrder = () => client.apiClient.get(endpoint+'?orderStatus=inProcess&sort=user');
 
 const getAllReadyOrder = () => client.apiClient.get(endpoint+'?orderStatus=ready&sort=user');
 
-const getAllOnDeliveryOrder = () => client.apiClient.get(endpoint+'?orderStatus=on delivery&sort=user');
+const getAllOnDeliveryOrder = () => client.apiClient.get(endpoint+'?orderStatus=onDelivery&sort=user');
 
 const getAllDeliveredOrder = () => client.apiClient.get(endpoint+'?orderStatus=delivered&sort=user');
 

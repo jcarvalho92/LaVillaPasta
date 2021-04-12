@@ -41,22 +41,28 @@ const categories = [
     value: 3,
   },
   {
-    backgroundColor: "#26de81",
+    backgroundColor: "#D050D0",
     icon: "food-fork-drink",
     label: "Combo",
     value: 4,
   },
   {
-    backgroundColor: "#2bcbba",
+    backgroundColor: "#26de81",
+    icon: "leaf",
+    label: "Salad",
+    value: 5,
+  },
+  {
+    backgroundColor: "#A63E29",
     icon: "cupcake",
     label: "Dessert",
-    value: 5,
+    value: 6,
   },
   {
     backgroundColor: "#45aaf2",
     icon: "glass-cocktail",
     label: "Drink",
-    value: 6,
+    value: 7,
   },
   
 ];
